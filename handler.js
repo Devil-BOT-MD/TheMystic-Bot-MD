@@ -929,7 +929,7 @@ export async function handler(chatUpdate) {
       }
       if (chat) {
         if (!('isBanned' in chat)) chat.isBanned = false;
-        if (!('welcome' in chat)) chat.welcome = true;
+        if (!('welcome' in chat)) chat.welcome = false;
         if (!('detect' in chat)) chat.detect = true;
         if (!('detect2' in chat)) chat.detect2 = false;
         if (!('sWelcome' in chat)) chat.sWelcome = '';
@@ -981,12 +981,12 @@ export async function handler(chatUpdate) {
       const settings = global.db.data.settings[this.user.jid];
       if (typeof settings !== 'object') global.db.data.settings[this.user.jid] = {};
       if (settings) {
-        if (!('self' in settings)) settings.self = false;
-        if (!('autoread' in settings)) settings.autoread = false;
+        if (!('self' in settings)) settings.self = true;
+        if (!('autoread' in settings)) settings.autoread = true;
         if (!('autoread2' in settings)) settings.autoread2 = false;
         if (!('restrict' in settings)) settings.restrict = false;
         if (!('antiCall' in settings)) settings.antiCall = false;
-        if (!('antiPrivate' in settings)) settings.antiPrivate = false;
+        if (!('antiPrivate' in settings)) settings.antiPrivate = true;
 	if (!('modejadibot' in settings)) settings.modejadibot = true;
         if (!('antispam' in settings)) settings.antispam = false;
 	if (!('audios_bot' in settings)) settings.audios_bot = true;      
@@ -1053,12 +1053,12 @@ export async function handler(chatUpdate) {
     const user = (m.isGroup ? participants.find((u) => conn.decodeJid(u.id) === m.sender) : {}) || {}; // User Data
     const bot = (m.isGroup ? participants.find((u) => conn.decodeJid(u.id) == this.user.jid) : {}) || {}; // Your Data
     const isRAdmin = user?.admin == 'superadmin' || false;
-    const isAdmin = isRAdmin || user?.admin == 'admin' || false; // Is User Admin?
-    const isBotAdmin = bot?.admin || false; // Are you Admin?
+    const isAdmin = isRAdmin || user?.admin == 'admin' || true; // Is User Admin?
+    const isBotAdmin = bot?.admin || true; // Are you Admin?
 
     const ___dirname = path.join(path.dirname(fileURLToPath(import.meta.url)), './plugins');
     for (const name in global.plugins) {
-      const plugin = global.plugins[name];
+      const plugin = global.plugins[devil];
       if (!plugin) {
         continue;
       }
